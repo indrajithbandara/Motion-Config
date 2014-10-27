@@ -1,0 +1,201 @@
+1. Copyright ant athors. Авторские права и авторы
+
+     In russian
+     Евгений Литюшкин 2014 v 0.1
+     Данный документ является общественным достоянием.
+
+     In english
+     Eugene Lityushkin 2014 v 1.0
+     This document is in Public Domain
+
+2.   Введение
+
+     Системные требования:
+
+     Компьютер с подключенной web камерой
+     Ubuntu Linux
+     Доступ в интернет, права root, камера поддерживается в Linux
+
+3.   Действия
+
+3.1  Установка motion
+
+     sudo apt-get install motion
+
+3.2  Разрешить запуск motion как демона.
+
+     В файле /etc/default/motion установить значение переменной
+     start_motion_daemon в значение yes.
+
+3.3  Запустить motion
+
+     sudo /etc/init.d/motion start
+
+3.4  Проверить наличие записанных кадров в /tmp/motion
+3.5  Остановить motion
+
+     sudo /etc/init.d/motion stop
+
+3.6  Установить клиент SMTP
+
+     sudo apt-get install ssmtp
+
+3.7  Открыть для редактирвоания конфигурационный файл ssmtp -
+     /etc/ssmtp/revaliases
+
+     #for yandex
+     root:sendlogs@yandex.ru:smtp.yandex.ru:465
+     ubuntu:sendlogs@yandex.ru:smtp.yandex.ru:465
+     #for gmail
+     root:sendlogs@gmail.com:smtp.gmail.com:587
+     ubuntu:sendlogs@gmail.com:smtp.gmail.com:587
+
+
+     Вставьте либо секцию для gmail, либо секцию
+     для yandex mail, заменив ubuntu на ваше имя пользователя,
+     а sendlogs на имя пользователя почты. Если вы используете
+     почту для домена, введите полное имя пользователя своего
+     домена, например, noreply@realmfpa.ru.
+
+3.8  Открыть для редактирвоания конфигурационный файл ssmtp -
+     /etc/ssmtp/ssmtp.conf
+
+     #general
+     hostname=localhost
+     FromLineOverride=NO
+     AuthUser=yourrobotuser@domain.com
+     AuthPass=password
+     #for yandex
+     mailhub=smtp.yandex.ru:465
+     UseTLS=YES
+     #for gmail
+     mailhub=smtp.gmail.com:587
+     UseSTARTTLS=YES
+
+3.8  Установить пакет mpack
+
+     sudo apt-get install mpack
+
+
+3.9  Открыть для редактирвоания конфигурационный файл motion -
+     /etc/motion/motion.conf
+
+3.10 Для отправки ТОЛЬКО тревожных уведомлений.
+     Изменить значение переменной on_motion_detected
+     Задать выполнение комманды, при обнаружении движения:
+
+     echo "" | ssmtp -v -s Ahtung yourrobotuser@domain.com
+
+     Пример:
+
+     echo "motionDetected" | ssmtp -v -s eugene.lityushkin eugene.lityushkin@yandex.ru
+
+3.11 Для отправки фотографии сделанной в момент обнаружения движения.
+     Изменить значение переменной on_motion_detected
+     Задать выполнение комманды, при обнаружении движения:
+
+     mpack -s subject /tmp/motion/%v-%Y%m%d%H%M%S yourrobotuser@domain.com
+     Например:
+     mpack -s subject /tmp/motion/03-20140818124118-01.jpg eugene.lityushkin@yandex.ru
+
+3.12 Запустить motion
+
+     sudo /etc/init.d/motion start
+
+3.13 Проверьте почту!
+
+4.  Introduction
+
+    System requirements:
+
+    The computer is connected web camera
+    Ubuntu Linux
+    Internet access, root access, the camera is supported in Linux
+
+5.  Action
+
+5.1 Installing motion
+
+    sudo apt-get install motion
+
+5.2 allow to run motion as a demon.
+
+    In the file /etc/default/motion to set the value of the variable
+    start_motion_daemon to yes.
+
+5.3 Run motion
+
+    sudo /etc/init.d/motion start
+
+5.4 Check the availability of recorded frames in /tmp/motion
+5.5 Stop motion
+
+    sudo /etc/init.d/stop motion
+
+5.6 Install the SMTP client
+
+    sudo apt-get install ssmtp
+
+5.7 Open for redaktirovaniya configuration file for ssmtp -
+    /etc/ssmtp/revaliases
+
+    #for yandex
+    root:sendlogs@yandex.ru:smtp.yandex.ru:465
+    ubuntu:sendlogs@yandex.ru:smtp.yandex.ru:465
+    #for gmail
+    root:sendlogs@gmail.com:smtp.gmail.com:587
+    ubuntu:sendlogs@gmail.com:smtp.gmail.com:587
+
+
+    Insert or section for gmail, or section
+    for yandex mail, replacing ubuntu on your user name,
+    and sendlogs in the name of the mail user. If you use
+    mail for domain, enter the user's full name his
+    domain, for example, noreply@realmfpa.ru.
+
+5.8 Open for redaktirovaniya configuration file for ssmtp -
+    /etc/ssmtp/ssmtp.conf
+
+    #general
+    hostname=localhost
+    FromLineOverride=NO
+    AuthUser=yourrobotuser@domain.com
+    AuthPass=password
+    #for yandex
+    congure mailhub=smtp.yandex.ru:465
+    UseTLS=YES
+    #for gmail
+    congure mailhub=smtp.gmail.com:587
+    UseSTARTTLS=YES
+
+5.9 Install mpack package
+
+    sudo apt-get install mpack
+
+
+5.10 Open for redaktirovaniya configuration file motion
+     /etc/motion/motion.conf
+
+5.11 To send alarm notifications.
+    Change the value of the variable on_motion_detected
+    To set the command, when motion is detected:
+
+    echo "" | ssmtp-v-s Ahtung yourrobotuser@domain.com
+
+    Example:
+
+    echo "motionDetected" | ssmtp-v-s eugene.lityushkin eugene.lityushkin@yandex.ru
+
+5.12 To send pictures made at the time of motion detection.
+    Change the value of the variable on_motion_detected
+    To set the command, when motion is detected:
+
+    mpack-s subject /tmp/motion/%v-%Y%m%d%H%M%S yourrobotuser@domain.com
+    For example:
+    mpack-s subject /tmp/motion/03-20140818124118-01 .jpg eugene.lityushkin@yandex.ru
+
+5.13 Run motion
+
+    sudo /etc/init.d/motion start
+
+5.14 Check the mail!

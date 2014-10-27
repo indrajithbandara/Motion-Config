@@ -1,0 +1,9 @@
+sendemail -f eugene.lityushkin@yandex.ru -m "Motion Detected" -t eugene.lityushkin@yandex.ru -s smtp.yandex.ru:587 -xu eugene.lityushkin@yandex.ru -xp P@ssw0rd -a /tmp/motion/%v-%Y%m%d%H%M%S-%q.jpg
+
+mutt -s "Motion Detected"  eugene.lityushkin@yandex.ru < /tmp/mailcontent.txt
+
+echo "This is the message body" | mail -s "This is the subject" eugene.lityushkin@yandex.ru
+
+mpack -s subject /tmp/motion/03-20140818124118-01.jpg eugene.lityushkin@yandex.ru
+
+echo "" | ssmtp -v -s Hello eugene.lityushkin@yandex.ru
