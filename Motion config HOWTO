@@ -54,6 +54,10 @@
 3.6  Установить клиент SMTP
 
      sudo apt-get install ssmtp
+     
+     or for Magia
+     
+     urpmi ssmtp    
 
 3.7  Открыть для редактирвоания конфигурационный файл ssmtp -
      /etc/ssmtp/revaliases
@@ -90,6 +94,17 @@
 3.8  Установить пакет mpack
 
      sudo apt-get install mpack
+     
+      
+     
+3.9  Установка Yandex Disk
+
+     wget http://repo.yandex.ru/yandex-disk/yandex-disk-latest.i386.rpm
+
+     rpm -iv yandex-disk-latest.i386.rpm
+     
+     Зарегистрировать учётную запись в 
+
 
 
 3.9  Открыть для редактирвоания конфигурационный файл motion -
