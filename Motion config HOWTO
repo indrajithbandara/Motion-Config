@@ -22,10 +22,25 @@
 
      sudo apt-get install motion
 
+     or for Magia
+
+     urpmi motion
+
 3.2  Разрешить запуск motion как демона.
 
      В файле /etc/default/motion установить значение переменной
      start_motion_daemon в значение yes.
+
+     or for Magia
+
+     put file motion.service in /usr/lib/systemd/system/
+
+     and
+
+     systemctl enable motion
+
+     systemctl start motion
+
 
 3.3  Запустить motion
 
