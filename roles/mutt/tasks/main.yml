@@ -1,4 +1,0 @@
-- urpmi:
-    pkg: mutt
-    state: present
-

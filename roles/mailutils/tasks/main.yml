@@ -1,4 +1,0 @@
-- urpmi:
-    pkg: mailutils
-    state: present
-
