@@ -1,0 +1,16 @@
+- urpmi:
+    pkg: ssmtp
+    state: present
+
+
+- name: install ssmtp config file
+  template:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+    mode: "{{item.mode}}"
+  with_items:
+    - { src: './roles/ssmtp/templates/ssmtp.conf', dest: '/etc/ssmtp.conf', mode: '0644'}
+    - { src: './roles/master/templates/revaliases', dest: '/etc/revaliases', mode: '0644'}
+  when: configuration | match("templates")
+  tags: install_config_files
+

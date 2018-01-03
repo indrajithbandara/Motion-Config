@@ -5,5 +5,5 @@
 # Example: root:your_login@your.domain:mailhub.your.domain[:port]
 # where [:port] is an optional port number that defaults to 25.
 #for yandex
-root:eugene.lityushkin@yandex.ru:smtp.yandex.ru:465
-motion:eugene.lityushkin@yandex.ru:smtp.yandex.ru:465
+root:testuser100001@yandex.ru:smtp.yandex.ru:465
+motion:testuser100001@yandex.ru:smtp.yandex.ru:465
