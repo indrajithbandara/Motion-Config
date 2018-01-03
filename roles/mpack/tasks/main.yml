@@ -1,0 +1,4 @@
+- urpmi:
+    pkg: mpack
+    state: present
+

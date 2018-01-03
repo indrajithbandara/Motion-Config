@@ -1,0 +1,8 @@
+mailagent: ssmtp
+user: user
+password: 123qwe
+configuration: templates
+loglevel1: 9
+logfile1: "/var/log/motion1.log"
+loglevel2: 9
+logfile2: "/var/log/motion2.log"

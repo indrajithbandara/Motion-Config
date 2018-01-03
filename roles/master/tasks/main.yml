@@ -1,0 +1,111 @@
+- urpmi:
+    pkg: motion
+    state: present
+
+- name: install motion config file step1
+  copy: src=motion.conf dest=/etc/motion.conf
+  when: configuration | match("files")
+  tags: install_config_files
+  
+- name: install motion config file step2
+  copy: src=motion2.conf dest=/etc/motion2.confi
+  when: configuration | match("files")
+  tags: install_config_files
+
+- name: install motion config file step1 from templates
+  template:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+    mode: "{{item.mode}}"
+  with_items:
+    - { src: './roles/master/templates/motion.conf', dest: '/etc/motion.conf', mode: '0644'}
+    - { src: './roles/master/templates/motion2.conf', dest: '/etc/motion2.conf', mode: '0644'}
+  when: configuration | match("templates")
+  tags: install_config_files
+
+
+- name: install motion unit file step3
+  copy: src=motion.service dest=/usr/lib/systemd/system/motion.service
+  tags: install_config_files
+
+- name: install motion unit file step4
+  copy: src=motion2.service dest=/usr/lib/systemd/system/motion2.service
+  tags: install_config_files
+
+
+- name: Motion service start
+  service:
+    name: motion
+    state: started
+  tags: service_start
+
+- name: Motion2 service start
+  service:
+    name: motion2
+    state: started
+  tags: service_start
+
+- name: Install mailx
+  urpmi:
+    pkg: mailx
+    state: present
+  when: mailagent | match("mailx")
+
+- name: Install mailutils
+  urpmi:
+    pkg: mailutils
+    state: present
+  when: mailagent | match("mailutils")
+
+- name: Install mutt
+  urpmi:
+    pkg: mutt
+    state: present
+  when: mailagent | match("mutt")
+
+- name: Install mpack
+  urpmi:
+    pkg: mpack
+    state: present
+  when: mailagent | match("mpack")
+
+- name: Install ssmtp
+  urpmi:
+    pkg: ssmtp
+    state: present
+  when: mailagent | match("ssmtp")
+
+- name: Install sendmain
+  urpmi:
+    pkg: sendmail
+    state: present
+  when: mailagent | match("sendmail")
+  
+- cron:
+    name: remove old capturing files 
+    weekday: 1
+    minute: 0
+    hour: 0
+    user: root
+    job: "find /home/user/motion/* -mtime +7 -delete"
+    cron_file: ansible_delete_old_capturing_files
+
+- cron:
+    name: remove old log files
+    weekday: 1
+    minute: 0
+    hour: 0
+    user: root
+    job: "find /var/log/* -mtime +30 -delete"
+    cron_file: ansible_delete_old_log_files
+
+
+
+
+
+
+
+
+
+
+

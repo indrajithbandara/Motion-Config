@@ -1,0 +1,5 @@
+- name: Install master Motion server 
+  hosts: all
+  user: root
+  roles:
+    - master

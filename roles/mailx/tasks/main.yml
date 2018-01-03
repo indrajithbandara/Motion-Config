@@ -1,0 +1,4 @@
+- urpmi:
+    pkg: mailx
+    state: present
+
