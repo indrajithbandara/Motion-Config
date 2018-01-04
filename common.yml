@@ -1,0 +1,5 @@
+- name: Backup and create new files and dirs for Motion installation 
+  hosts: all
+  user: root
+  roles:
+    - common

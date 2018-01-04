@@ -6,14 +6,6 @@ loglevel1: 9
 logfile1: "/var/log/motion1.log"
 loglevel2: 9
 logfile2: "/var/log/motion2.log"
-
-debug: YES
-rewriteDomain: yandex.ru
-hostname: yandex.ru
-root: testuser100001@yandex.ru
-FromLineOverride: NO
-AuthUser: testuser100001@yandex.ru
-AuthPass: 123qwe
-mailhub: smtp.yandex.ru:465
-UseTLS: YES
-
+mail: "evgeny.lityushkin@gmail.com"
+target_dir1: "/home/user/motion/cam1"
+target_dir2: "/home/user/motion/cam2"

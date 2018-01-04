@@ -1,0 +1,58 @@
+- name: Backup old config files - /etc/*motion* Step1
+  shell: mkdir /tmp/oldconfig
+  tags: backup_old_configs
+
+- name: Backup old config files - /etc/*motion* Step2
+  shell: mv /etc/motion.conf /tmp/oldconfig/
+  tags: backup_old_configs
+
+- name: Backup old config files - /etc/*motion* Step3
+  shell: mv /etc/motion2.conf /tmp/oldconfig/
+  tags: backup_old_configs
+
+- name: Remove old config files - /etc/*motion*.conf
+  shell: rm -f /etc/motion*.conf
+  tags: remove_old_configs
+
+- name: stop old motion
+  service:
+    name: motion
+    state: stopped
+  tags: old_service_stop
+
+- name: stop old motion2
+  service:
+    name: motion2
+    state: stopped
+  tags: old_service_stop
+
+- name: remove old motion work directory's Step1
+  file:
+    state: absent
+    path: "{{ target_dir1 }}"
+  tags: remove_work_directory
+
+- name: remove old motion work directory's Step2
+  file:
+    state: absent
+    path: "{{ target_dir2 }}"
+  tags: remove_work_directory
+
+- name: cretae new motion work directory's Step1
+  file:
+    path: "{{ target_dir1 }}"
+    state: directory
+    owner: motion
+    group: root
+    mode: 0775
+  tags: create_work_directory
+
+- name: create new motion work directory's Step2
+  file:
+    path: "{{ target_dir2 }}"
+    state: directory
+    owner: motion
+    group: root
+    mode: 0775
+  tags: create_work_directory
+

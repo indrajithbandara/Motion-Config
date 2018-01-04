@@ -1,6 +1,7 @@
 - urpmi:
     pkg: motion
     state: present
+  tags: install_motion
 
 - name: install motion config file step1
   copy: src=motion.conf dest=/etc/motion.conf
@@ -50,37 +51,44 @@
     pkg: mailx
     state: present
   when: mailagent | match("mailx")
+  tags: install_mailx
+
 
 - name: Install mailutils
   urpmi:
     pkg: mailutils
     state: present
   when: mailagent | match("mailutils")
+  tags: install_mailutils
 
 - name: Install mutt
   urpmi:
     pkg: mutt
     state: present
   when: mailagent | match("mutt")
+  tags: install_mutt
 
 - name: Install mpack
   urpmi:
     pkg: mpack
     state: present
   when: mailagent | match("mpack")
+  tags: install_mpack
 
 - name: Install ssmtp
   urpmi:
     pkg: ssmtp
     state: present
   when: mailagent | match("ssmtp")
+  tags: install_ssmtp
 
 - name: Install sendmain
   urpmi:
     pkg: sendmail
     state: present
   when: mailagent | match("sendmail")
-  
+  tags: install_sendmail  
+
 - cron:
     name: remove old capturing files 
     weekday: 1
@@ -89,6 +97,7 @@
     user: root
     job: "find /home/user/motion/* -mtime +7 -delete"
     cron_file: ansible_delete_old_capturing_files
+  tags: cron_config
 
 - cron:
     name: remove old log files
@@ -98,7 +107,7 @@
     user: root
     job: "find /var/log/* -mtime +30 -delete"
     cron_file: ansible_delete_old_log_files
-
+  tags: cron_config
 
 
 
