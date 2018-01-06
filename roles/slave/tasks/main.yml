@@ -109,16 +109,6 @@
     cron_file: ansible_delete_old_log_files
   tags: cron_config
 
-- name: Add rule to shorewall
-  command: echo "ACCEPT  net     fw      tcp     8080    - \
-                 ACCEPT  net     fw      tcp     8081    -
-                 ACCEPT  net     fw      tcp     9080    -
-                 ACCEPT  net     fw      tcp     9081    -" >> /etc/shorewall/rules.drakx
-  tags: add_rule_to_shorewall
-
-- name: Restart shorewall
-  command:  shorewall stop && shorewall start
-  tags: add_rule_to_shorewall
 
 
 

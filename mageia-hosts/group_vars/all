@@ -9,3 +9,4 @@ logfile2: "/var/log/motion2.log"
 mail: "evgeny.lityushkin@gmail.com"
 target_dir1: "/home/user/motion/cam1"
 target_dir2: "/home/user/motion/cam2"
+remoute_ip: 192.168.1.41
