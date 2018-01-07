@@ -1,0 +1,65 @@
+- name: update apt cache
+  command: apt-get update
+  tags: update_apt_cache
+
+- name: install motion config file step1
+  copy: src=motion.conf dest=/etc/motion.conf
+  when: configuration | match("files")
+  tags: install_config_files
+
+- name: install motion config file step2
+  copy: src=motion2.conf dest=/etc/motion2.confi
+  when: configuration | match("files")
+  tags: install_config_files
+
+- name: install motion config file step1 from templates
+  template:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+    mode: "{{item.mode}}"
+  with_items:
+    - { src: './roles/master/templates/motion.conf', dest: '/etc/motion.conf', mode: '0644'}
+    - { src: './roles/master/templates/motion2.conf', dest: '/etc/motion2.conf', mode: '0644'}
+  when: configuration | match("templates")
+  tags: install_config_files
+
+- name: install common packages
+  apt: name={{ item }} state=installed
+  with_items:
+    - motion
+    - mutt
+
+- cron:
+    name: remove old capturing files
+    weekday: 1
+    minute: 0
+    hour: 0
+    user: root
+    job: "find /home/user/motion/* -mtime +7 -delete"
+    cron_file: ansible_delete_old_capturing_files
+  tags: cron_config
+
+- cron:
+    name: remove old log files
+    weekday: 1
+    minute: 0
+    hour: 0
+    user: root
+    job: "find /var/log/* -mtime +30 -delete"
+    cron_file: ansible_delete_old_log_files
+  tags: cron_config
+
+- name: reset ufw firewall
+  ufw: state=reset
+  tags: ufw
+
+handlers:
+  - name: restart machine
+    shell: sleep 2 && shutdown -r now "Ansible updates triggered"
+    async: 1
+    poll: 0
+    ignore_errors: true
+    tags: restart
+  
+  - name: waiting for server to come back
+    local_action: wait_for host={{ inventory_hostname }} state=started

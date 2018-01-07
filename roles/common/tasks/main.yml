@@ -38,7 +38,13 @@
     path: "{{ target_dir2 }}"
   tags: remove_work_directory
 
-- name: cretae new motion work directory's Step1
+- name: create new motion work directory's Step1
+  user:
+    name: motion
+    comment: "motion user"
+  tags: create_work_directory
+
+- name: cretae new motion work directory's Step2
   file:
     path: "{{ target_dir1 }}"
     state: directory
@@ -47,7 +53,7 @@
     mode: 0775
   tags: create_work_directory
 
-- name: create new motion work directory's Step2
+- name: create new motion work directory's Step3
   file:
     path: "{{ target_dir2 }}"
     state: directory

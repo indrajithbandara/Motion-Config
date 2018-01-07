@@ -1,0 +1,5 @@
+[mint-hosts]
+host15 ansible_port=22 ansible_host=192.168.1.33 ansible_user=root
+host17 ansible_port=22 ansible_host=192.168.1.42 ansible_user=root
+host12 ansible_port=22 ansible_host=192.168.1.40 ansible_user=root
+host14 ansible_port=22 ansible_host=192.168.1.36 ansible_user=root
